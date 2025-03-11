@@ -19,5 +19,19 @@ module "gw" {
 
  
  vpc_id      = module.main.vpc_id
+ #name        = "test"
+}
+
+output "internet_gateway_id" {
+  value = module.gw.internet_gateway_id
+}
+
+module "rt" {
+  source      = "./main/rt"
+
+ 
+ vpc_id      = module.main.vpc_id
+ cidr_block  = var.cidr_block
+ internet_gateway_id =  module.gw.internet_gateway_id
 }
 
