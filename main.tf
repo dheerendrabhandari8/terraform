@@ -4,13 +4,20 @@ module "main" {
   Name        = "VPC-module"
 }
 
-# You can reference the VPC ID output from the module
 output "vpc_id" {
-  value = module.main.vpc_id  # This references the vpc_id output from the module
+  value = module.main.vpc_id  
 }
 module "public" {
   source      = "./main/subnet"
-  subnet_ip   = var.subnet_ip  # Pass the subnet CIDR block
+  subnet_ip   = var.subnet_ip  
   Name        = "Module-subnet"
-  vpc_id      = module.main.vpc_id  # Pass the VPC ID output from the "main" module
+  vpc_id      = module.main.vpc_id  
 }
+
+module "gw" {
+  source      = "./main/igw"
+
+ 
+ vpc_id      = module.main.vpc_id
+}
+
