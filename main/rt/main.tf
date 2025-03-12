@@ -1,20 +1,21 @@
+# In ./main/rt/main.tf (Inside the module)
+
 resource "aws_route_table" "rt" {
   vpc_id = var.vpc_id
 
+  # Example route
   route {
-   
-    cidr_block = var.cidr_block
-    #cidr_block = "10.0.1.0/24"
-   gateway_id = var.internet_gateway_id
+    cidr_block = "0.0.0.0/0"
+    gateway_id = var.gateway_id
   }
-
- # route {
- #   ipv6_cidr_block        = "::/0"
-  #  egress_only_gateway_id = aws_egress_only_internet_gateway.gw.id
- # }
 
   tags = {
     Name = "Route-table"
   }
+}
+
+resource "aws_route_table_association" "association" {
+  subnet_id      = var.subnet_id  # Associate the route table with the subnet
+  route_table_id = aws_route_table.rt.id
 }
 

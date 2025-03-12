@@ -5,4 +5,3 @@ type = string
 variable "subnet_ip"{
 type = string
 }
-

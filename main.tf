@@ -13,6 +13,10 @@ module "public" {
   Name        = "Module-subnet"
   vpc_id      = module.main.vpc_id  
 }
+output "subnet_id" {
+  value = module.public.subnet_id
+}
+
 
 module "gw" {
   source      = "./main/igw"
@@ -22,16 +26,12 @@ module "gw" {
  #name        = "test"
 }
 
-output "internet_gateway_id" {
-  value = module.gw.internet_gateway_id
+output "gateway_id" {
+  value = module.gw.gateway_id
 }
-
 module "rt" {
-  source      = "./main/rt"
-
- 
- vpc_id      = module.main.vpc_id
- cidr_block  = var.cidr_block
- internet_gateway_id =  module.gw.internet_gateway_id
+  source      = "./main/rt"  # Path to your route table module
+  vpc_id      = module.main.vpc_id
+  gateway_id  = module.gw.gateway_id
+  subnet_id   = module.public.subnet_id  # Pass the subnet ID here
 }
-
