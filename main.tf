@@ -35,3 +35,11 @@ module "rt" {
   gateway_id  = module.gw.gateway_id
   subnet_id   = module.public.subnet_id  # Pass the subnet ID here
 }
+
+module "instance" {
+  source  = "./main/ec2-instance/"
+  ami_value = "ami-0e35ddab05955cf57"
+  instance_type_value = "t2.micro"
+
+}
+
